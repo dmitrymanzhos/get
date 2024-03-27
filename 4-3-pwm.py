@@ -5,10 +5,10 @@ gp.setwarnings(False)
 
 out = 24
 dac = [8, 11, 7, 1, 0, 5, 12, 6]
-gp.setup(dac, gp.OUT, initial=gp.HIGH)
+gp.setup(dac, gp.OUT, initial=gp.LOW)
 gp.setup(out, gp.OUT)
-p = gp.PWM(24, 1000)
-p.start(0)
+p = gp.PWM(24, 0.1)
+p.start(50)
 
 
 def int_to_bin(a):
@@ -16,7 +16,7 @@ def int_to_bin(a):
     
 try:
     while True:
-        a = float(input())
+        a = int(input())
         p.ChangeDutyCycle(a)
 
 
@@ -27,5 +27,5 @@ except KeyboardInterrupt:
 
 finally:
     p.stop()
-    gp.output(dac, 0)
+    gp.output(24, 0)
     gp.cleanup()
