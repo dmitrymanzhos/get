@@ -15,23 +15,25 @@ def int_to_bin(a):
     return [int(i) for i in bin(a)[2:].rjust(8, '0')]
 
 def adc():
-    for i in range(0, 256):
-        gp.output(dac, int_to_bin(i))
+    al = [0 for i in range(8)]
+    for i in range(8):
+        al[7 - i] = 1
+        gp.output(dac, al)
+        sleep(.01)
         if gp.input(comp) == 1:
-            print(i)
-            return i
-    return 0
+            al[i] = 0
+    return(int("".join(al), base=2))
 
 
 try:
     while True:
         v = adc()
+        if v == 0:
+            continue
         gp.output(dac, int_to_bin(v))
         print(f"{v}, {(3.3/256)*v} V")
         time.sleep(1)
      
-
-
 
 finally:
     gp.output(dac, 0)
