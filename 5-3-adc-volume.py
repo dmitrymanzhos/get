@@ -9,6 +9,7 @@ comp = 14
 troyka = 13
 
 gp.setup(dac, gp.OUT, initial=gp.HIGH)
+gp.setup(leds, gp.OUT, initial=gp.HIGH)
 gp.setup(troyka, gp.OUT, initial=gp.HIGH)
 gp.setup(comp, gp.IN)
 
@@ -32,11 +33,12 @@ try:
         if v == 0:
             continue
         gp.output(dac, int_to_bin(v))
-        gp.output(dac, int_to_bin((v/256)*8))
+        gp.output(leds, int_to_bin((v/256)*8))
         print(f"{v}, {(3.3/256)*v} V")
         time.sleep(1)
      
 
 finally:
     gp.output(dac, 0)
+    gp.output(leds, 0)
     gp.cleanup()
