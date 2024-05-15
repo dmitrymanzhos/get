@@ -101,13 +101,3 @@ finally:
     gp.cleanup()
     count = 0
 
-
-
-
-
-
-
-finally:
-    gp.output(dac, 0)
-    gp.output(leds, 0)
-    gp.cleanup()
